@@ -1,0 +1,23 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  ai_review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: AI Code Review
+        uses: openai/codex-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          pr_number: ${{ github.event.number }}
+
+          ai_provider: "openai"
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          openai_model: "gpt-4.1"
